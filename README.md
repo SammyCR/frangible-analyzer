@@ -1,0 +1,1 @@
+This is an application that analyzes lbf data to find two peaks and lowest (valley)
