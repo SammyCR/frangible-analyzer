@@ -83,12 +83,16 @@ lowPoint = min(betweenHumpList)
 
 #Widgets
 window = Tk()
-titleLabel = Label(window, relief = 'groove', width = 20)
+titleLabel = Label(window, relief = 'flat', width = 20)
 nameLabel = Label(window, relief = 'groove', width = 20)
 peak1Label = Label(window, relief = 'groove', width = 20)
 valleyLabel = Label(window, relief = 'groove', width = 20)
 peak2Label = Label(window, relief = 'groove', width = 20)
+peak1Check = Label(window, relief = 'groove', width = 2)
+valleyCheck = Label(window, relief = 'groove', width = 2)
+peak2Check = Label(window, relief = 'groove', width = 2)
 calcButton = Button(window)
+showLimits = Button(window)
 
 #Geometry
 titleLabel.grid(row = 1, column = 1, columnspan = 4)
@@ -96,7 +100,11 @@ nameLabel.grid(row = 3, column = 1, columnspan = 2)
 peak1Label.grid(row = 4, column = 1, columnspan = 2)
 valleyLabel.grid(row = 5, column = 1, columnspan = 2)
 peak2Label.grid(row = 6, column = 1, columnspan = 2)
-calcButton.grid(row = 8, column = 1, columnspan = 2)
+peak1Check.grid(row = 4, column = 3)
+valleyCheck.grid(row = 5, column = 3)
+peak2Check.grid(row = 6, column = 3)
+calcButton.grid(row = 8, column = 1)
+showLimits.grid(row = 8, column = 2)
 
 #Static Properties
 window.title("Frangible Results")
@@ -106,6 +114,12 @@ peak1Label.configure(text = "Peak 1: ", anchor="w")
 valleyLabel.configure(text = "Valley: ", anchor="w")
 peak2Label.configure(text = "Peak 2: ", anchor="w")
 calcButton.configure(text = "Get Values")
+showLimits.configure(text = "Show Limits")
+
+
+peak1Limit = 1.0 #LIMIT FOR peak1
+valleyLimit = .5 #LIMIT FOR valley
+peak2Limit = 1.0 #LIMIT FOR peak2
 
 
 def getValues():
@@ -113,8 +127,30 @@ def getValues():
     peak1Label.configure(text = ("Peak 1: " + str(currentLargest1))) #currentLargest1 is the value of the first peak
     valleyLabel.configure(text = ("Valley: " + str(lowPoint))) #lowPoint is the value of the valley
     peak2Label.configure(text = ("Peak 2: " + str(currentLargest2))) #currentLargest2 is the value of the second peak
+    if float(currentLargest1) > peak1Limit:
+        peak1Check.configure(bg = "green")
+    else:
+        peak1Check.configure(bg = "red")
+    if float(lowPoint) > valleyLimit:
+        valleyCheck.configure(bg = "green")
+    else:
+        valleyCheck.configure(bg = "red")
+    if float(currentLargest2) > peak2Limit:
+        peak2Check.configure(bg = "green")
+    else:
+        peak2Check.configure(bg = "red")
+
+def limitPopup():
+    popup = Tk()
+    popup.wm_title("Limits")
+    label = Label(popup, text=("Peak 1 Limit: " + str(peak1Limit) + "\nValley Limit: " + str(valleyLimit) + "\nPeak 2 Limit: " + str(peak2Limit)))
+    label.pack(side="top", fill="x", pady=10)
+    B1 = Button(popup, text="Hide", command = popup.destroy)
+    B1.pack()
+    popup.mainloop()
 
 calcButton.configure(command = getValues)
+showLimits.configure(command = limitPopup)
 
 #Sustain window
 window.mainloop()
