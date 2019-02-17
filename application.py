@@ -121,7 +121,7 @@ peak1Limit = 1.0 #LIMIT FOR peak1
 valleyLimit = .5 #LIMIT FOR valley
 peak2Limit = 1.0 #LIMIT FOR peak2
 
-
+#Function to add values to application labels and change colors of limit boxes
 def getValues():
     nameLabel.configure(text = ("File Name: " + str(latest_file))) #latest_file is the name of the latest file
     peak1Label.configure(text = ("Peak 1: " + str(currentLargest1))) #currentLargest1 is the value of the first peak
@@ -140,6 +140,7 @@ def getValues():
     else:
         peak2Check.configure(bg = "red")
 
+#Function to create a popup message with limits
 def limitPopup():
     popup = Tk()
     popup.wm_title("Limits")
