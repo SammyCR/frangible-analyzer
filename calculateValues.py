@@ -1,6 +1,6 @@
 import csv
 
-fileName = '../data/Frangible_8_2019-02-13_14-30-48.csv' #The .csv file being used
+fileName = '../data/Frangible_1_2019-02-13_11-45-56.csv' #The .csv file being used
 
 #the following converts the csv file into a list
 def toList(name):
